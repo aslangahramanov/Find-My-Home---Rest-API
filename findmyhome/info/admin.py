@@ -1,9 +1,8 @@
 from django.contrib import admin
 
-from .models import OnSaleHouse, RentalHouse
+from .models import HomeAds
 
 # Register your models here.
 
 
-admin.site.register(OnSaleHouse)
-admin.site.register(RentalHouse)
+admin.site.register(HomeAds)
