@@ -6,7 +6,6 @@ from info.api.serializers import HomeAdsSerializer
 
 
 
-
 @api_view(['GET', 'POST'])
 
 def home_ads_create_api_view(request):
