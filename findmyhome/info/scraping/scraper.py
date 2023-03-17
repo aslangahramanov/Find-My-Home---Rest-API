@@ -3,6 +3,7 @@
 import requests
 from bs4 import BeautifulSoup as bSoup
 import json
+from info.models import HomeAds
 
 
 #######    A web scraping application that extracts data from a defined website based on user choices.
@@ -104,16 +105,20 @@ class HomeAdsScraper():
     def get_elements_data(self):
         data = []
         for el_link in self.get_elements_source():
+            print("Processing")
             el_source = self.get_source(el_link)
             title = el_source.find("div", attrs={"class": "services-container"}).find("h1").text
             description = el_source.find("div", attrs={"class": "side"}).find("article").find("p").text
             price = el_source.find("span", attrs={"class": "price-val"}).text
             currency = el_source.find("span", attrs={"class": "price-cur"}).text
-            square_price = el_source.find("div", attrs={"class": "unit-price"}).text
-            category = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[1].text or None
-            floor = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[3].text or None
-            area = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[5].text or None
-            rooms = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[7].text or None
+            square_price = el_source.find("div", attrs={"class": "unit-price"}).text if el_source.find("div", attrs={"class": "unit-price"}) else ""
+            category = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[1].text or ""
+            floor = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[3].text or ""
+            area = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[5].text or ""
+            rooms = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[7].text or ""
+            no = list(el_source.find("div", attrs={"class": "item_info"}).find_all("p"))[0].text[16:] or ""
+            image_url = el_source.find("div", attrs={"class": "large-photo"}).get("data-mfp-src") or ""
+            print(image_url)
             data.append({
                 "title": title,
                 "description": description,
@@ -124,14 +129,18 @@ class HomeAdsScraper():
                 "floor" : floor,
                 "area" : area,
                 "rooms" : rooms,
+                "no": no,
+                "image_url" : image_url,
             })
             
         return data
     
     
-    def sendtodatabase(self, url):
-        data = self.get_elements_data()
-        headers = {"Content-type": 'application/json'}
-        response = requests.post(url, data=json.dumps(data), headers=headers)
+    def sendtodatabase(self):
+        data_set = self.get_elements_data()
+        instance_data_set = list()
+        for data in data_set:
+            instance_data_set.append(HomeAds(**data))
         
-        return response.status_code   
+        return HomeAds.objects.bulk_create(instance_data_set, ignore_conflicts=True)
+        

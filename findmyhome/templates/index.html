@@ -1,0 +1,83 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+    <section id="header">
+        <div class="custom-container">
+            <div class="navbar d-flex justify-content-center align-items-center">
+                <div class="col-lg-4 p-0 m-0">
+                    <div class="logo">
+                        <a href="index.html">Find My HOME</a>
+                    </div>
+                </div>
+                <div class="col-lg-8 p-0 m-0">
+                    <div class="nav-menu">
+                        <ul class="list-unstyled d-flex justify-content-end align-items-center">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">API</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <section id="main">
+        <div class="main-bg">
+            <img src="{% static 'photo/home-bg.jpeg' %}" alt="">
+        </div>
+        <div class="custom-container">
+            <div class="info-text">
+                <h1>Find the house you are looking for</h1>
+            </div>
+            <div class="selection-table">
+                <form action="{% url 'info:home' %}" method="POST">
+                    {% csrf_token %}
+                    <select name="city" id="">
+                        <option value="baki"><p class="option-text">Bakı</p></option>
+                        <option value="samaxi">Şamaxı</option>
+                        <option value="gence">Gəncə</option>
+                        <option value="sumqayit">Sumqayıt</option>
+                    </select>
+                    <select name="buy-or-rent" id="">
+                        <option value="alqi-satqi">Alış</option>
+                        <option value="kiraye">Kirayə</option>
+                    </select>
+                    <select name="category" id="">
+                        <option value="menziller">Mənzillər</option>
+                        <option value="menziller/yeni-tikili">Yeni Tikili</option>
+                        <option value="menziller/kohne-tikili">Köhnə Tikili</option>
+                    </select>
+                    <select name="rooms" id="">
+                        <option value="1-otaqli">1 Otaqlı</option>
+                        <option value="2-otaqli">2 Otaqlı</option>
+                        <option value="3-otaqli">3 Otaqlı</option>
+                        <option value="4-otaqli">4 Otaqlı</option>
+                        <option value="5-otaqli">5 Otaqlı</option>
+                    </select>
+                    <div class="input-area">
+                        <input type="text" name="min-price" placeholder="Minimum Qiymət">
+                        <input type="text" name="max-price" placeholder="Maksimum Qiymət">
+                    </div>
+                    <button type="submit" class="submit-button">Submit</button>
+                </form>
+            </div>  
+        </div>
+    </section>
+    
+
+
+    <script src="{% static 'scripts.js' %}"></script>
+</body>
+</html>
