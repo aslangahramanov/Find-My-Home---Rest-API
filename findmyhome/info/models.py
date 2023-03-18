@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 
 
 
@@ -14,6 +14,7 @@ class HomeAds(models.Model):
     floor = models.CharField(max_length=10, null=False, blank=False)
     area = models.CharField(max_length=50, null=False, blank=False)
     rooms = models.CharField(max_length=50, null=False, blank=False)
+    buy_or_rent = models.CharField(max_length=50)
     no = models.CharField(max_length=50, null=False, blank=False, unique=True)
     image_url = models.TextField()
     

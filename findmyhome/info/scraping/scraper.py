@@ -6,6 +6,9 @@ import json
 from info.models import HomeAds
 
 
+
+
+
 #######    A web scraping application that extracts data from a defined website based on user choices.
 
 
@@ -18,6 +21,7 @@ class HomeAdsScraper():
         self.rooms = rooms
         self.min_price = min_price
         self.max_price = max_price
+        
         
         
         
@@ -46,11 +50,15 @@ class HomeAdsScraper():
     
     
     
+    
+    
     #####   This method paginates the dynamic url up to a certain number after it is created
     
     def get_pages_link(self):
         links = list(map(lambda num: self.get_link() + f"&page={num}", range(1, 2)))
         return links
+    
+    
     
     
     
@@ -63,6 +71,8 @@ class HomeAdsScraper():
             return soup
         else:
             return False
+        
+        
         
         
         
@@ -99,6 +109,8 @@ class HomeAdsScraper():
     
     
     
+    
+    
     ####    Pulls the relevant data from the source of each element and freezes it in a list
 
     
@@ -109,9 +121,10 @@ class HomeAdsScraper():
             el_source = self.get_source(el_link)
             title = el_source.find("div", attrs={"class": "services-container"}).find("h1").text
             description = el_source.find("div", attrs={"class": "side"}).find("article").find("p").text
-            price = el_source.find("span", attrs={"class": "price-val"}).text
+            price = el_source.find("span", attrs={"class": "price-val"}).text.replace(" ","")
             currency = el_source.find("span", attrs={"class": "price-cur"}).text
             square_price = el_source.find("div", attrs={"class": "unit-price"}).text if el_source.find("div", attrs={"class": "unit-price"}) else ""
+            buy_or_rent = "Alqı-satqı" if square_price else "Kirayə"
             category = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[1].text or ""
             floor = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[3].text or ""
             area = list(el_source.find("table", attrs={"class": "parameters"}).find_all("td"))[5].text or ""
@@ -122,7 +135,8 @@ class HomeAdsScraper():
             data.append({
                 "title": title,
                 "description": description,
-                "price" : price,
+                "buy_or_rent" : buy_or_rent,
+                "price" : int(price),
                 "currency" : currency,
                 "square_price" : square_price,
                 "category" : category,
@@ -134,6 +148,14 @@ class HomeAdsScraper():
             })
             
         return data
+    
+    
+    
+    
+    
+    #####     We convert each element of the data list we received as a result of the
+    ####      process into model instance through our model and save 
+    ###       it to the database with the bulk create method.
     
     
     def sendtodatabase(self):
