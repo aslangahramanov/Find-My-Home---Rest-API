@@ -84,7 +84,7 @@ a{
     }
 
     .selection-table{
-        width: 1000px;
+        width: 1200px;
         padding: 20px 80px;
         position: absolute;
         top: 50%;
@@ -123,7 +123,7 @@ a{
                 width: 100%;
                 margin-top: 60px;
                 display: flex;
-                justify-content: space-around;
+                justify-content: center;
                 
                 input{
                     width: 30%;
@@ -136,6 +136,7 @@ a{
                     font-size: 18px;
                     font-weight: 600;
                     font-family: $Poppins;
+                    margin: 0 40px;
 
                     &::placeholder{
                         color: #00000088;

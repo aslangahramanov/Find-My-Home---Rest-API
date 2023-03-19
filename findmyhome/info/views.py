@@ -3,6 +3,12 @@ from info.scraping.scraper import HomeAdsScraper
 
 
 
+####     A view we wrote for the user interface we prepared. 
+###      When the features selected by the user are posted with the form, 
+##       they are retrieved with the request.POST.get method and sent as a 
+#        parameter to our application to be scraping.
+
+
 def home(request):
     if request.method == 'GET':
         return render(request, 'index.html')

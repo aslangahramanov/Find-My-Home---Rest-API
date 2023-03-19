@@ -3,6 +3,9 @@ from django.db import models
 
 
 
+###    We create a model called HomeAds to save the extracted data to the database. 
+##     where "no" is unique, preventing re-saving of each retrieved data
+
 
 class HomeAds(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
@@ -19,7 +22,7 @@ class HomeAds(models.Model):
     image_url = models.TextField()
     
     def __str__(self):
-        return self.title
+        return self.title + " " + self.price + " " + self.currency
 
     
 

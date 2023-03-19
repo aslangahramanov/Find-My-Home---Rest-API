@@ -23,9 +23,9 @@
                 <div class="col-lg-8 p-0 m-0">
                     <div class="nav-menu">
                         <ul class="list-unstyled d-flex justify-content-end align-items-center">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="{% url 'info:home' %}">Home</a></li>
                             <li><a href="#">About</a></li>
-                            <li><a href="#">API</a></li>
+                            <li><a href="{% url 'api:house-list' %}">API</a></li>
                         </ul>
                     </div>
                 </div>
@@ -49,6 +49,11 @@
                         <option value="samaxi">Şamaxı</option>
                         <option value="gence">Gəncə</option>
                         <option value="sumqayit">Sumqayıt</option>
+                        <option value="beyleqan">Beyləqan</option>
+                        <option value="balaken">Balakən</option>
+                        <option value="agsu">Ağsu</option>
+                        <option value="mingecevir">Mingəçevir</option>
+                        <option value="lenkeran">Lənkəran</option>
                     </select>
                     <select name="buy-or-rent" id="">
                         <option value="alqi-satqi">Alış</option>
@@ -67,10 +72,10 @@
                         <option value="5-otaqli">5 Otaqlı</option>
                     </select>
                     <div class="input-area">
-                        <input type="text" name="min-price" placeholder="Minimum Qiymət">
-                        <input type="text" name="max-price" placeholder="Maksimum Qiymət">
+                        <input type="number" min="0" name="min-price" placeholder="Minimum Qiymət">
+                        <input type="number" min="0" name="max-price" placeholder="Maksimum Qiymət">
                     </div>
-                    <button type="submit" class="submit-button">Submit</button>
+                    <button type="submit" class="submit-button">Scrap</button>
                 </form>
             </div>  
         </div>
